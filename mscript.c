@@ -52,6 +52,10 @@ int main( int argc, char *argv[] )
     /* Input loop */	    
 	while( fgets(str, STRSIZE, input) ) {	
 		/* puts(&str[0]); */
+		/* Ignore comments starting with hastags*/
+		if (str[0] == '#') {
+			continue;
+		}
 		/* Eval matlab code string */
 		engEvalString(ep, str);
     	/* Print output buffer to stdout */
