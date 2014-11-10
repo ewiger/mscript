@@ -5,3 +5,6 @@ ARCH=glnxa64
 
 all:
 	${MATLAB_ROOT}/bin/mex -f ${MATLAB_ROOT}/bin/engopts.sh mscript.c
+
+install:
+	echo '!'
