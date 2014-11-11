@@ -9,13 +9,13 @@ Usage
 Code comes from <STDIN>
 
 ```bash
-cat test.m | ./mscript.sh
+cat test.m | ./mscript
 ```
 
 or from the file specified aas the first argument
 
 ```bash
-./mscript.sh test.m
+./mscript test.m
 ```
 
 In the second case stdin is not quined by matlab engine. 
