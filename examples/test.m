@@ -1,4 +1,4 @@
-#!/usr/local/bin/Mscript
+#!/usr/bin/env mscript
 1
 2 + 2
 pi
