@@ -22,6 +22,16 @@ In the second case stdin is not quined by matlab engine.
 
 Note: this works only if you have a fully functional local install.
 
+
+Install
+-------
+
+On linux, specify the full path to MATLAB like following
+
+```bash
+./configure --with-matlab=/usr/local/MATLAB/R2014a/bin --disable-dependency-tracking
+```
+
 Disclamer
 ---------
 All of this code is licensed under MIT.
