@@ -9,13 +9,19 @@ Usage
 Code comes from <STDIN>
 
 ```bash
-cat test.m | ./mscript
+echo 'matlabroot' | mscript
 ```
 
-or from the file specified aas the first argument
+or
 
 ```bash
-./mscript test.m
+cat examples/test.m | mscript
+```
+
+or from the file specified as the first argument
+
+```bash
+mscript examples/test.m
 ```
 
 In the second case stdin is not quined by matlab engine. 
@@ -30,11 +36,13 @@ On linux, specify the full path to MATLAB like following
 
 ```bash
 ./configure --with-matlab=/usr/local/MATLAB/R2014a/bin --disable-dependency-tracking
+make
+sudo make install
 ```
 
 Disclamer
 ---------
 All of this code is licensed under MIT.
 
-MATLAB is ragistered trademark of Mathworks.
+MATLAB is registered trademark of Mathworks.
 
