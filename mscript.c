@@ -82,8 +82,14 @@ int main( int argc, char *argv[] )
     /*
      * Load engine symbols dynamically.
      */
-    snprintf(libeng_path, sizeof libeng_path, 
+    if (strncmp(MATLABARCH, "mac", 3) == 0) {
+        snprintf(libeng_path, sizeof libeng_path, 
+             "%s/%s/%s", MATLABPATH, MATLABARCH, "libeng.dylib");    
+    } else {
+        snprintf(libeng_path, sizeof libeng_path, 
              "%s/%s/%s", MATLABPATH, MATLABARCH, "libeng.so");
+    }
+    puts(libeng_path);
     load_enginge(libeng_path);
     engOpenFn = load_symbol("engOpen");
     engOutputBufferFn = load_symbol("engOutputBuffer");

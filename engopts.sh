@@ -26,7 +26,7 @@
 	TMW_ROOT="$MATLAB"
     fi
     MFLAGS="-I$TMW_ROOT/extern/include"
-    MLIBS="-L$TMW_ROOT/bin/$Arch -leng -lmx"
+    MLIBS="-L$TMW_ROOT/bin/$Arch -lmx"
     MCXXFLAGS="-I$TMW_ROOT/extern/include/cpp $MFLAGS"
     MCXXLIBS="$MLIBS"
     LDEXTENSION=''
@@ -98,13 +98,13 @@ echo "Error: Did not imbed 'options.sh' code"; exit 1 #imbed options.sh maci 12
             ;;
         maci64)
 #----------------------------------------------------------------------------
-            CC='xcrun  -sdk macosx10.7  clang'
+            CC='xcrun  -sdk macosx10.9  clang'
 ## workaround clang defect temporarily use line below           SDKROOT='/Developer/SDKs/MacOSX10.6.sdk'
 # compute SDK root on the fly
-# target 10.7 
-            MW_SDKROOT_TMP="find `xcode-select -print-path` -name MacOSX10.7.sdk"
+# target 10.9 
+            MW_SDKROOT_TMP="find `xcode-select -print-path` -name MacOSX10.9.sdk"
 			MW_SDKROOT=`$MW_SDKROOT_TMP`
-            MACOSX_DEPLOYMENT_TARGET='10.7'
+            MACOSX_DEPLOYMENT_TARGET='10.9'
             ARCHS='x86_64'
             CFLAGS="-fno-common -arch $ARCHS -isysroot $MW_SDKROOT -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
             CFLAGS="$CFLAGS  -fexceptions"
@@ -114,7 +114,7 @@ echo "Error: Did not imbed 'options.sh' code"; exit 1 #imbed options.sh maci 12
             CDEBUGFLAGS='-g'
 #
             CLIBS="$CLIBS -lstdc++"
-            CXX='xcrun  -sdk macosx10.7  clang++'
+            CXX='xcrun  -sdk macosx10.9  clang++'
             CXXFLAGS="-fno-common -fexceptions -arch $ARCHS -isysroot $MW_SDKROOT -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
             CXXFLAGS="$CXXFLAGS $MCXXFLAGS -DMACI64"
             CXXLIBS="$MLIBS -lstdc++"
@@ -143,7 +143,7 @@ echo "Error: Did not imbed 'options.sh' code"; exit 1 #imbed options.sh maci 12
 #
 # Architecture independent lines:
 #
-#     Set and uncomment any lines which will apply to all architectures.
+#     Set and uncmment any lines which will apply to all architectures.
 #
 #----------------------------------------------------------------------------
 #           CC="$CC"

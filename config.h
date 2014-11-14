@@ -32,10 +32,10 @@
 #define HAVE_UNISTD_H 1
 
 /* Define MATLAB architecture on this computer. */
-#define MATLABARCH "glnxa64"
+#define MATLABARCH "maci64"
 
 /* Define path to MATLABROOT/bin directory. */
-#define MATLABPATH "/usr/local/MATLAB/R2014a/bin"
+#define MATLABPATH "/Applications/MATLAB_R2014a.app/bin"
 
 /* Define to the address where bug reports for this package should be sent. */
 #define PACKAGE_BUGREPORT "eugeny.yakimovitch@gmail.com"
