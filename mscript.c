@@ -55,6 +55,31 @@ int unload_enginge() {
     dlclose(engine_handle);
 }
 
+char escaped_str[STRSIZE+1];
+
+char *escape_str(char *source){
+    char *target;
+
+    target = escaped_str;
+    while(*source)
+    {
+        if ((*source) == '\n') {
+            // skip new line
+            source++;
+            continue;
+        }
+        if ((*source) == '\'') {
+            *target = '\'';
+            target++;
+        }
+        *target = *source;
+        source++;
+        target++;
+    }    
+    *target = '\0';
+    return escaped_str;
+}
+
 
 int main( int argc, char *argv[] )
 {
@@ -63,7 +88,9 @@ int main( int argc, char *argv[] )
     char matlab_call[STRSIZE+1];
     char libeng_path[STRSIZE+1];
     char str[STRSIZE+1];
+    char safe_str[STRSIZE+1];
     char output_buffer[BUFSIZE+1];
+    char *pfound;
 
     snprintf(matlab_call, sizeof matlab_call, 
              "%s/matlab -nodesktop -nosplash", 
@@ -88,8 +115,7 @@ int main( int argc, char *argv[] )
     } else {
         snprintf(libeng_path, sizeof libeng_path, 
              "%s/%s/%s", MATLABPATH, MATLABARCH, "libeng.so");
-    }
-    puts(libeng_path);
+    }    
     load_enginge(libeng_path);
     engOpenFn = load_symbol("engOpen");
     engOutputBufferFn = load_symbol("engOutputBuffer");
@@ -110,7 +136,7 @@ int main( int argc, char *argv[] )
     
     /* Input loop */    
     str[STRSIZE] = '\0';
-    while( fgets(str, STRSIZE, input) ) {    
+    while( fgets(str, STRSIZE, input) ) {
         /*fprintf(stdout, "input: '%s'", (const char *)str);*/
         /* Ignore comments starting with hashtags*/
         if ((str[0] == '#')
@@ -118,12 +144,23 @@ int main( int argc, char *argv[] )
             	|| (str[strspn(str, " \t\v\r\n")] == '\0')) { 
             continue;
         }
+        /* Wrap str into try and catch for error handling */
+        //printf("%s\n", escape_str(str));
+        snprintf(safe_str, sizeof safe_str,
+             "try\neval('%s');\ncatch ME\nfprintf('mscript execution has failed.\\nException(%%s): %%s\\n', ME.identifier, ME.message);\nend",
+             escape_str(str));
+
         /* Eval matlab code string */
-        engEvalStringFn(ep, str);
+        engEvalStringFn(ep, safe_str);
         /* Print output buffer to stdout */
         /* First three characters are always the double prompt and space (>> ).*/
+        if (strstr(output_buffer, "mscript execution has failed.\n") != NULL) {
+            /* Detect error messages that start with "Error: " */
+            fprintf(stderr, "MATLAB error detected while parsing: %s", str);
+            fprintf(stderr, "%s", output_buffer);
+            break;
+        }
         printf("%s", output_buffer + 3);
-        /* TODO: error messages start with ??? */
         output_buffer[0] = '\0';
         str[0] = '\0';
     }   
