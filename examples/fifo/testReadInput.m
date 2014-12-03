@@ -1,9 +1,6 @@
-pipefilename = input('', 's');
-pipefilename = pipefilename(2:end); % skip percent char as a comment
+#!/usr/local/bin/mscript
 
-fprintf('%s: reading form "%s"\n', mfilename, pipefilename)
-
-std_input = readstdin(pipefilename);
-
-fprintf('%s: read the following from standard input: \n', mfilename);
-disp(std_input);
+% Read YAML or JSON file from standard input 
+pipe = input('', 's');
+pipe = pipe(2:end); % skip percent char as a comment
+std_input = readstdin(pipe);
