@@ -1,7 +1,9 @@
 pipefilename = input('', 's');
 pipefilename = pipefilename(2:end); % skip percent char as a comment
-disp(['reading form: ' pipefilename])
-% json_input = readinput(pipefilename);
-json_input = readstdin(pipefilename);
-disp('Read this JSON: ');
-disp(json_input);
+
+fprintf('%s: reading form "%s"\n', mfilename, pipefilename)
+
+std_input = readstdin(pipefilename);
+
+fprintf('%s: read the following from standard input: \n', mfilename);
+disp(std_input);
